@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VB6 theme demo</title>
+<link rel="stylesheet" href="vb6-theme.css">
+<style>.tbtn svg{display:block}</style>
+</head><body>
+<!-- Static demo of every component in vb6-theme.css, laid out like the planned M&E noise calculator.
+     No behaviour: it only shows the markup each component expects. -->
+<div class="win app">
+  <div class="titlebar"><span class="tt">M&amp;E Noise Calculator - Demo project - [demo.json]</span><button class="cap" aria-label="Help">?</button></div>
+  <nav class="menubar"><div class="menu"><button><u>F</u>ile</button></div><div class="menu"><button><u>E</u>dit</button></div><div class="menu"><button><u>T</u>ools</button></div><div class="menu"><button><u>H</u>elp</button></div></nav>
+  <div class="toolbar">
+    <button class="tbtn"><span>Project…</span></button><span class="tsep"></span>
+    <button class="tbtn"><span>Import</span></button><button class="tbtn"><span>Export</span></button><span class="tsep"></span>
+    <button class="tbtn"><span>Sources…</span></button>
+    <label class="tbtn" style="gap:6px"><span>Scenario set</span><select class="cb" style="width:150px"><option>Day – normal</option><option>Night – trickle</option></select></label>
+  </div>
+  <div class="cols">
+    <section class="col">
+      <fieldset class="frame" style="flex:1 1 auto;display:flex;flex-direction:column"><legend>System</legend>
+        <div class="treewrap" style="flex:1 1 auto;min-height:300px">
+          <ul class="tree" role="tree">
+            <li aria-expanded="true"><div class="row"><button class="tw">−</button><span class="node"><b>MVHR-01</b> Supply <span class="val">0.25 m³/s</span></span></div>
+              <ul>
+                <li><div class="row"><span class="tw leaf"></span><span class="node">Duct 315Ø, 3 m</span></div></li>
+                <li><div class="row"><span class="tw leaf"></span><span class="node sel">Attenuator ATT01 <span class="val">AS 33/12</span></span></div></li>
+                <li><div class="row"><span class="tw leaf"></span><span class="node">Bend r, 315</span></div></li>
+                <li aria-expanded="true"><div class="row"><button class="tw">−</button><span class="node">Branch 250/200</span></div>
+                  <ul>
+                    <li aria-expanded="true"><div class="row"><button class="tw">−</button><span class="node">Leg 1 → 250Ø <span class="val">0.15 m³/s</span></span></div>
+                      <ul>
+                        <li><div class="row"><span class="tw leaf"></span><span class="node">Duct 250Ø, 4 m</span></div></li>
+                        <li><div class="row"><span class="tw leaf"></span><span class="node">Terminal → G.04 Office <span class="val">NR 31</span></span></div></li>
+                      </ul></li>
+                    <li aria-expanded="true"><div class="row"><button class="tw">−</button><span class="node">Leg 2 → 200Ø <span class="val">0.10 m³/s</span></span></div>
+                      <ul>
+                        <li><div class="row"><span class="tw leaf"></span><span class="node warn">Terminal → (unassigned)</span></div></li>
+                      </ul></li>
+                  </ul></li>
+              </ul></li>
+            <li aria-expanded="false"><div class="row"><button class="tw">+</button><span class="node"><b>EF-02</b> Extract</span></div><ul><li>hidden</li></ul></li>
+          </ul>
+        </div>
+      </fieldset>
+    </section>
+    <section class="col">
+      <div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true">Room</button><button class="tab" role="tab" aria-selected="false">Rooms</button></div>
+      <div class="tabpage" role="tabpanel">
+        <fieldset class="frame"><legend>Room</legend>
+          <div class="crow"><label>Ref</label><input class="tb" value="G.04" style="width:72px"><label>Name</label><input class="tb grow" value="Office"></div>
+        </fieldset>
+        <fieldset class="frame"><legend>Dimensions and criterion</legend><div class="fgrid six">
+          <div class="fld"><label>L <span class="hint">(m)</span></label><input class="tb n" value="5.0"></div>
+          <div class="fld"><label>W <span class="hint">(m)</span></label><input class="tb n" value="4.0"></div>
+          <div class="fld"><label>H <span class="hint">(m)</span></label><input class="tb n" value="2.7"></div>
+          <div class="fld"><span class="l">V <span class="hint">(m³)</span></span><span class="ro n">54.0</span></div>
+          <div class="fld"><label>Criterion</label><select class="cb"><option>NR 35</option></select></div>
+          <div class="fld"><span class="l">Result</span><span class="ro n">NR 31</span></div>
+        </div></fieldset>
+        <fieldset class="frame"><legend>Contributions</legend>
+          <div class="gridwrap lst"><table class="grid"><thead><tr><th>Path</th><th class="c">Direct</th><th class="c">Reverb.</th><th class="c">r (m)</th><th class="c">Q</th><th class="c">dB(A)</th></tr></thead><tbody>
+            <tr class="pick"><td>MVHR-01 → Leg 1</td><td class="c"><input type="checkbox" class="chk" checked></td><td class="c"><input type="checkbox" class="chk" checked></td><td class="c">1.5</td><td class="c">2</td><td class="c">28.4</td></tr>
+            <tr><td>EF-02 → G.04</td><td class="c"><input type="checkbox" class="chk"></td><td class="c"><input type="checkbox" class="chk" checked></td><td class="c">–</td><td class="c">–</td><td class="c">22.1</td></tr>
+          </tbody></table></div>
+          <div class="btnrow" style="margin-top:6px"><button class="btn sm">OK-style button</button><button class="btn sm" disabled>Disabled</button><label class="ck"><input type="radio" class="opt" name="o" checked> Option</label><label class="ck"><input type="radio" class="opt" name="o"> Option</label><span class="stat pass">PASS</span><span class="stat round">PASS*</span><span class="stat fail">FAIL</span></div>
+        </fieldset>
+      </div>
+    </section>
+    <section class="col">
+      <fieldset class="frame"><legend>Calculation sheet</legend>
+        <div class="paper"><table class="sheet"><colgroup><col style="width:140px"><col><col span="8" style="width:38px"></colgroup><tbody>
+          <tr class="ttl"><td colspan="10">Path Calculation Sheet</td></tr>
+          <tr class="bar"><td colspan="2" class="l">MVHR-01 Supply → G.04 Office</td><td class="b g">63</td><td class="b">125</td><td class="b">250</td><td class="b">500</td><td class="b">1k</td><td class="b">2k</td><td class="b">4k</td><td class="b g">8k</td></tr>
+          <tr><td class="el">Source L<sub>w</sub></td><td class="nt">Normal speed</td><td class="b">72</td><td class="b">70</td><td class="b">66</td><td class="b">61</td><td class="b">57</td><td class="b">52</td><td class="b">48</td><td class="b">44</td></tr>
+          <tr><td class="el">Attenuator<span class="ref">ATT01</span></td><td class="nt">600 × 600 mm, L 1200 mm</td><td class="b min">5</td><td class="b min">11</td><td class="b min">19</td><td class="b min">31</td><td class="b min">39</td><td class="b min">38</td><td class="b min">33</td><td class="b min">24</td></tr>
+          <tr class="tot"><td colspan="2" class="r">Sound pressure level in room</td><td class="b">45</td><td class="b">38</td><td class="b">31</td><td class="b">22</td><td class="b">15</td><td class="b">10</td><td class="b">9</td><td class="b">8</td></tr>
+          <tr><td colspan="2">Status</td><td colspan="8" class="v pass">PASS</td></tr>
+        </tbody></table></div>
+      </fieldset>
+    </section>
+  </div>
+  <div class="statusbar"><div class="panel grow">Ready.</div><div class="panel">Scenario: Day – normal</div><div class="panel">demo.json</div></div>
+</div>
+<!-- a modal dialog (Sources pop-up): list on the left, the selected unit on the right -->
+<div class="overlay" style="position:fixed;background:transparent;pointer-events:none;align-items:flex-end;justify-content:flex-end">
+  <div class="win dlg" style="width:560px;pointer-events:auto">
+    <div class="titlebar"><span class="tt">Sources</span><button class="cap">✕</button></div>
+    <div class="body" style="display:grid;grid-template-columns:160px 1fr;gap:8px">
+      <div class="gridwrap lst"><table class="grid"><thead><tr><th>Unit</th></tr></thead><tbody><tr class="pick"><td>MVHR (Model X)</td></tr><tr><td>EF-02 extract fan</td></tr></tbody></table></div>
+      <fieldset class="frame"><legend>Scenarios</legend><div class="gridwrap"><table class="grid"><thead><tr><th>Scenario</th><th>Port</th><th class="c">m³/s</th><th class="b">63</th><th class="b">125</th><th class="b">250</th></tr></thead><tbody><tr><td>Normal</td><td>Supply</td><td class="c">0.25</td><td class="b">72</td><td class="b">70</td><td class="b">66</td></tr><tr><td>Boost</td><td>Supply</td><td class="c">0.35</td><td class="b">78</td><td class="b">76</td><td class="b">72</td></tr></tbody></table></div></fieldset>
+    </div>
+    <div class="btns"><button class="btn def">OK</button><button class="btn">Cancel</button></div>
+  </div>
+</div>
+</body></html>

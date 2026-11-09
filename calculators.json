@@ -1,0 +1,18 @@
+[
+  {
+    "id": "crosstalk-calculator",
+    "name": "Crosstalk DnT,w Calculator",
+    "description": "Composite DnT,w of a party wall with crosstalk through ventilation paths: duct system loss, attenuator selection and minimum IL, shared attenuators, schedules, Word / LaTeX / Excel outputs.",
+    "path": "/crosstalk-calculator/",
+    "status": "live",
+    "updated": "2026-11-09"
+  },
+  {
+    "id": "mne-noise-calculator",
+    "name": "M&E Noise Calculator",
+    "description": "Duct-borne noise from building services units into rooms: sources with scenarios, duct network tree, direct and reverberant room levels, NR and dB(A) checks.",
+    "path": "/mne-noise-calculator/",
+    "status": "in development",
+    "updated": "2026-11-09"
+  }
+]
