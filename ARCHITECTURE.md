@@ -42,7 +42,8 @@ francalacci-site/               (parent folder, not a repository)
   mne-noise-calculator/         → mne-noise-calculator           (private, Cloudflare Pages)
   calculators-hub/              → calculators-hub (to create)    (private: the Worker and the list page)
 ```
-- **The calculators list and `calculators.json`** move from `website/` to `calculators-hub/`, because the list is behind the login too.
+- **The calculators list and `calculators.json`** live in `calculators-hub/public/` (moved from `website/` on 2026-11-09), because the list is behind the login too. Each entry gets an `origin` (its `*.pages.dev` address) once its Pages project exists.
+- **The hub reaches each `*.pages.dev`** (itself behind Access) with an Access **service token** stored as Worker secrets.
 - **`website/shared/vb6-theme.css`** stays the theme's master copy; calculators keep vendored copies, as now.
 
 To add a calculator:
