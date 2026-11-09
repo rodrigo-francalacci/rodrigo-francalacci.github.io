@@ -16,7 +16,7 @@ Every calculator on rodrigo.francalacci.com follows these rules. Calculators are
 - **Units and language:** UK English, SI units. Equations in help and docs define every symbol.
 
 ## 3. Data files
-- **JSON import/export always available**, even when cloud save exists.
+- **JSON import/export** is the way to save and open work (cloud save is on hold, §5).
 - **Every file carries an identifier:** `"format": "<calculator id>"`, `"version": n`, `"savedAt"`. Older versions must always open (migrate, never break).
 - **`localStorage`** is only a convenience autosave: wrap it in try/catch, and the app must work without it.
 
@@ -24,7 +24,9 @@ Every calculator on rodrigo.francalacci.com follows these rules. Calculators are
 - **Header:** a small "← Calculators" link to `/` (the calculators list on the calculators host), shown only when served over http(s), not from a file.
 - **About/Help:** shows the version and date of the last change.
 
-## 5. Cloud save (when `shared/cloud.js` exists — later phase)
+## 5. Cloud save — ON HOLD
+**Decision (2026-11-09): no Firebase or cloud save until Rod says so. Calculators save and open JSON files only (§3).** Don't add Save/Open-to-cloud buttons, load `cloud.js` or any Firebase code. The API below is kept only as the plan for if Rod restarts it.
+
 - **Loading:** the calculator loads `/shared/cloud.js` (served by the calculators host) only when served over http(s), and shows **Save**, **Save as** and **Open** only if `window.SiteCloud` is present.
 - **API (all async):**
   - `SiteCloud.user()`

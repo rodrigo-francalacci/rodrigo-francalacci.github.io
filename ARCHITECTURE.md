@@ -7,7 +7,7 @@ Status: third draft (2026-11-09). Items marked **[DECIDE]** are Rod's open decis
 - **Login required:** the whole calculators area, meaning the list of calculators and every calculator. These are hosted on **Cloudflare Workers behind Cloudflare Access**, and only Rod's email address is allowed in. (Cloudflare has merged Pages into Workers.)
 - **Why:** GitHub Pages has no access control; anything it serves can be downloaded by anyone. Cloudflare Access checks the login at Cloudflare's edge **before any file is sent**, so the calculators' code, methods and manufacturer data are never public.
 - **GitHub Pages stays off for every calculator repository.** The calculator repositories stay **private** on GitHub.
-- **Private documents and saved projects** (later) live in Firebase, behind sign-in and security rules (§4).
+- **Saving work:** JSON files only (Export/Import in each calculator). **No Firebase or cloud save until Rod says so** (decided 2026-11-09, §4).
 
 ## 2. Addresses
 ### Recommended: a separate host for the calculators
@@ -53,7 +53,9 @@ To add a calculator:
 3. Add `calculators-hub/workers/<id>/` (copy an existing one) and deploy it; add its service binding to the hub's `wrangler.toml` and its entry to `calculators.json`.
 4. Deploy the hub, then check every address asks for sign-in.
 
-## 4. Firebase (one project for the calculators) — later phase
+## 4. Firebase (one project for the calculators) — ON HOLD
+**Decision (2026-11-09): no Firebase and no cloud save until Rod says so. Calculators save and open JSON files only.** Don't create a Firebase project, `cloud.js` or any cloud code. The notes below are kept only as the plan for if and when Rod restarts it.
+
 - **Sign-in:** Firebase Auth with Google. Authorised domains: `calculators.rodrigo.francalacci.com` (where the calculators run), `rodrigo.francalacci.com` (if private website pages are added later), and `localhost`.
 - **Access and Firebase do different jobs:** Access decides who can load the pages; Firebase decides whose data is read and saved. Both stay.
 - **Firestore layout:**
@@ -67,5 +69,5 @@ To add a calculator:
 1. **Website:** repository, domain (`rodrigo` → GitHub Pages) and HTTPS; a simple public home page. The calculators list is not published here.
 2. **Calculators behind login:** done 2026-11-09 (Zero Trust Free; Access app "Calculators"; hub and two calculator Workers; every address checked).
 3. **M&E calculator:** adopt the contract (root `index.html` etc., see its `SITE-CHANGES.md`), then switch its deploy config to the root `index.html`.
-4. **Firebase:** project, `cloud.js`, security rules; Save/Open in the crosstalk calculator first.
-5. **Public CV** on the website; private documents on Firebase or behind Access.
+4. **Public website:** home and CV structure, navigation and style (see the plan Rod approves).
+5. **Firebase / cloud save: on hold** until Rod says so (§4). Private documents, if wanted, go behind Cloudflare Access meanwhile.
