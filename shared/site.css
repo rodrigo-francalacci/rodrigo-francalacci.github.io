@@ -1,130 +1,137 @@
 /* ==========================================================================
-   site.css: the house style for rodrigo.francalacci.com (public pages) and
-   the private host (Acoustics, Electronics, Admin). Plain, text-first, fast.
-   Layout: a left sidebar for navigation and a readable content column.
+   site.css: house style for rodrigo.francalacci.com (public pages) and the
+   private host (Acoustics, Electronics, Admin).
+   Plain and light: Arial, black text on white, classic link colours,
+   a left sidebar, small line icons (shared/icons.svg).
    On narrow screens the sidebar becomes a short menu at the top.
    Calculators keep their own VB6 theme inside their pages.
    ========================================================================== */
 
 :root {
-  --bg: #ffffff;
-  --text: #1f2328;
-  --muted: #5d6670;
-  --line: #d9dde1;
-  --side-bg: #f4f5f6;
-  --accent: #076e6c;          /* links, current page */
-  --accent-soft: #e3f1f0;
-  --code-bg: #f4f5f6;
-  --side-w: 15rem;
-  --measure: 46rem;           /* content column, about 75 characters */
+  --ink: #000;                     /* text */
+  --paper: #fff;                   /* background */
+  --red: rgb(220, 20, 60);         /* crimson: current page, highlights, notes */
+  --green: rgb(34, 139, 34);       /* forest green: Acoustics, "live" */
+  --blue: rgb(0, 0, 255);          /* links */
+  --indigo: rgb(75, 0, 130);       /* visited links, Electronics */
+  --slate: rgb(112, 128, 144);     /* secondary text, rules */
+  --rule: rgb(208, 214, 220);      /* light lines */
+  --side-w: 13.5rem;
+  --measure: 46rem;                /* content column, about 80 characters */
   color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #15181b;
-    --text: #e4e6e8;
-    --muted: #9aa3ab;
-    --line: #2c3237;
-    --side-bg: #1b1f23;
-    --accent: #4fc2bd;
-    --accent-soft: #1d3332;
-    --code-bg: #1f2428;
-    color-scheme: dark;
-  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.55 Arial, Helvetica, sans-serif;
 }
 
 /* ---------- skip link (keyboard users) ---------- */
-.skip { position: absolute; left: -999px; top: 0; padding: .5rem .75rem; background: var(--accent); color: #fff; z-index: 10; }
+.skip { position: absolute; left: -999px; top: 0; padding: .4rem .7rem; background: var(--ink); color: var(--paper); z-index: 10; }
 .skip:focus { left: .5rem; top: .5rem; }
+
+/* ---------- icons ---------- */
+.ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
+.c-red { color: var(--red); }
+.c-green { color: var(--green); }
+.c-blue { color: var(--blue); }
+.c-indigo { color: var(--indigo); }
+.c-slate { color: var(--slate); }
 
 /* ---------- layout ---------- */
 .layout { display: grid; grid-template-columns: var(--side-w) minmax(0, 1fr); min-height: 100vh; }
 
 .side {
-  background: var(--side-bg);
-  border-right: 1px solid var(--line);
-  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--rule);
+  padding: 1.4rem 1rem 1.4rem 1.1rem;
   position: sticky; top: 0; height: 100vh; overflow-y: auto;
 }
-.brand { display: block; color: var(--text); text-decoration: none; font-weight: 700; font-size: 1.1rem; line-height: 1.25; margin: 0 .5rem 1.5rem; }
-.brand small { display: block; font-weight: 400; font-size: .85rem; color: var(--muted); margin-top: .2rem; }
+.brand { display: block; color: var(--ink); text-decoration: none; font-weight: bold; font-size: 1.1rem; line-height: 1.25; margin-bottom: 1.4rem; }
+.brand small { display: block; font-weight: normal; font-size: .85rem; color: var(--slate); margin-top: .15rem; }
+.brand:hover { color: var(--red); }
 
 .side nav ul { list-style: none; margin: 0; padding: 0; }
-.side nav li { margin: 0; }
 .side nav a {
-  display: block; padding: .3rem .5rem; border-radius: 4px;
-  color: var(--text); text-decoration: none;
+  display: flex; align-items: center; gap: .5rem;
+  padding: .22rem 0 .22rem .55rem; border-left: 3px solid transparent;
+  color: var(--blue); text-decoration: none;
 }
-.side nav a:hover { background: var(--accent-soft); }
-.side nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
-.side nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.side nav a:hover { text-decoration: underline; }
+.side nav a[aria-current="page"] { color: var(--ink); font-weight: bold; border-left-color: var(--red); }
+.side nav a:focus-visible { outline: 1px dotted var(--ink); outline-offset: 1px; }
 .side .group {
-  margin: 1.25rem .5rem .35rem; font-size: .75rem; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+  margin: 1.2rem 0 .3rem .55rem; font-size: .78rem; font-weight: bold;
+  letter-spacing: .05em; text-transform: uppercase;
 }
-.side .group + ul a { padding-left: 1rem; }
-.side .signin { margin-top: 1.25rem; border-top: 1px solid var(--line); padding-top: .75rem; }
-.side .signin a { color: var(--accent); }
+.side .group.acoustics { color: var(--green); }
+.side .group.electronics { color: var(--indigo); }
+.side .end { margin-top: 1.2rem; padding-top: .7rem; border-top: 1px solid var(--rule); }
 
-/* the "Menu" toggle only shows on narrow screens */
+/* the "Menu" toggle only appears on narrow screens, and only with JavaScript */
 .menu-toggle { display: none; }
 
-main { padding: 2.5rem 2.5rem 4rem; }
+main { padding: 2.2rem 2.5rem 4rem; }
 .content { max-width: var(--measure); }
 
-footer.foot { max-width: var(--measure); margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .875rem; }
-footer.foot a { color: var(--muted); }
+footer.foot { max-width: var(--measure); margin-top: 3rem; padding-top: .7rem; border-top: 1px solid var(--rule); color: var(--slate); font-size: .85rem; }
+footer.foot a { color: var(--slate); }
 
 /* ---------- text ---------- */
-h1, h2, h3 { line-height: 1.25; margin: 2rem 0 .75rem; }
-h1 { font-size: 1.9rem; margin-top: 0; }
-h2 { font-size: 1.35rem; padding-bottom: .25rem; border-bottom: 1px solid var(--line); }
-h3 { font-size: 1.1rem; }
+h1, h2, h3 { line-height: 1.25; margin: 1.8rem 0 .6rem; }
+h1 { font-size: 1.75rem; margin-top: 0; }
+h2 { font-size: 1.25rem; padding-bottom: .2rem; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.05rem; }
 p, ul, ol, table { margin: 0 0 1rem; }
-a { color: var(--accent); text-underline-offset: 2px; }
-a:hover { text-decoration-thickness: 2px; }
-.lead { font-size: 1.1rem; color: var(--muted); margin-top: -.25rem; }
-.muted { color: var(--muted); }
-code, kbd { font: .9em ui-monospace, SFMono-Regular, Consolas, monospace; background: var(--code-bg); padding: .1em .3em; border-radius: 3px; }
-hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+a { color: var(--blue); }
+a:visited { color: var(--indigo); }
+a:hover { color: var(--red); }
+.lead { font-size: 1.05rem; color: var(--slate); margin-top: -.3rem; }
+.muted { color: var(--slate); }
+.hl { color: var(--red); font-weight: bold; }          /* highlight a word or phrase */
+code, kbd { font: .9em Consolas, "Courier New", monospace; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
 
 table { border-collapse: collapse; width: 100%; font-size: .95rem; }
-th, td { text-align: left; padding: .4rem .6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { font-weight: 600; }
+th, td { text-align: left; padding: .35rem .6rem .35rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: bold; border-bottom-color: var(--slate); }
 
-/* a simple list of links with a short description, e.g. a section index */
+/* a list of links, each with a short description (a section index) */
 .index { list-style: none; padding: 0; }
-.index li { padding: .6rem 0; border-bottom: 1px solid var(--line); }
-.index a { font-weight: 600; }
-.index span { display: block; color: var(--muted); font-size: .95rem; }
+.index li { display: flex; gap: .6rem; padding: .55rem 0; border-bottom: 1px dotted var(--rule); }
+.index li .ic { margin-top: .2rem; }
+.index a { font-weight: bold; }
+.index .desc { display: block; color: var(--ink); }
+.index .meta { display: block; color: var(--slate); font-size: .85rem; }
 
-.note { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: .6rem .9rem; border-radius: 0 4px 4px 0; }
+/* small status words, e.g. in the calculators list */
+.status { font-size: .8rem; font-weight: bold; text-transform: uppercase; letter-spacing: .03em; }
+.status.live { color: var(--green); }
+.status.dev { color: var(--red); }
+
+/* a note: thin crimson rule on the left */
+.note { border-left: 3px solid var(--red); padding: .1rem 0 .1rem .8rem; color: var(--ink); }
+.note b:first-child { color: var(--red); }
 
 /* ---------- narrow screens: sidebar becomes a top menu ---------- */
 @media (max-width: 760px) {
   .layout { grid-template-columns: 1fr; }
-  .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: .75rem 1rem; }
+  .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); padding: .8rem 1rem; }
   .side-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
   .brand { margin: 0; }
-  /* Without JavaScript the menu simply stays open; with it, a "Menu" button folds it away. */
-  .side nav { margin-top: .75rem; }
+  .side nav { margin-top: .7rem; }
+  /* Without JavaScript the menu stays open; with it, a "Menu" button folds it away. */
   .js .menu-toggle {
-    display: inline-block; font: inherit; font-size: .95rem;
-    padding: .35rem .75rem; border: 1px solid var(--line); border-radius: 4px;
-    background: var(--bg); color: var(--text); cursor: pointer;
+    display: inline-flex; align-items: center; gap: .4rem;
+    font: inherit; font-size: .95rem; padding: .3rem .7rem;
+    border: 1px solid var(--slate); background: var(--paper); color: var(--ink); cursor: pointer;
   }
   .js .side nav { display: none; }
   .js .side.open nav { display: block; }
-  main { padding: 1.5rem 1rem 3rem; }
+  main { padding: 1.4rem 1rem 3rem; }
 }
 
 /* ---------- print (e.g. the CV) ---------- */
@@ -132,6 +139,6 @@ th { font-weight: 600; }
   .side, .skip, footer.foot { display: none !important; }
   .layout { display: block; }
   main { padding: 0; }
-  body { font-size: 11pt; color: #000; background: #fff; }
-  a { color: #000; text-decoration: none; }
+  body { font-size: 11pt; }
+  a, a:visited { color: #000; text-decoration: none; }
 }

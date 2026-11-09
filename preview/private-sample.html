@@ -3,14 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Acoustics — Calculators (preview of the private sidebar)</title>
+<title>Acoustic calculators (preview of the private sidebar)</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="/shared/site.css">
 <script src="/shared/site.js"></script>
 </head>
 <body>
-<!-- PREVIEW ONLY: shows how pages on the private host (my.rodrigo.francalacci.com) will look.
-     This file is never published on the public site. -->
 <a class="skip" href="#main">Skip to content</a>
 <div class="layout">
   <aside class="side">
@@ -20,37 +18,38 @@
     </div>
     <nav id="site-nav" aria-label="Site">
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/cv/">CV</a></li>
-        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/"><svg class="ic c-red" aria-hidden="true"><use href="/shared/icons.svg#home"/></svg>Home</a></li>
+        <li><a href="/cv/"><svg class="ic c-red" aria-hidden="true"><use href="/shared/icons.svg#cv"/></svg>CV</a></li>
+        <li><a href="/contact/"><svg class="ic c-red" aria-hidden="true"><use href="/shared/icons.svg#mail"/></svg>Contact</a></li>
       </ul>
-      <p class="group">Acoustics</p>
+      <p class="group acoustics">Acoustics</p>
       <ul>
-        <li><a href="/preview/private-sample.html">Calculators</a></li>
-        <li><a href="#">Documents</a></li>
+        <li><a href="/preview/private-sample.html"><svg class="ic c-green" aria-hidden="true"><use href="/shared/icons.svg#calc"/></svg>Calculators</a></li>
+        <li><a href="#"><svg class="ic c-green" aria-hidden="true"><use href="/shared/icons.svg#books"/></svg>Documents</a></li>
       </ul>
-      <p class="group">Electronics</p>
+      <p class="group electronics">Electronics</p>
       <ul>
-        <li><a href="#">Calculators</a></li>
-        <li><a href="#">Documents</a></li>
-        <li><a href="#">Projects</a></li>
+        <li><a href="#"><svg class="ic c-indigo" aria-hidden="true"><use href="/shared/icons.svg#calc"/></svg>Calculators</a></li>
+        <li><a href="#"><svg class="ic c-indigo" aria-hidden="true"><use href="/shared/icons.svg#books"/></svg>Documents</a></li>
+        <li><a href="#"><svg class="ic c-indigo" aria-hidden="true"><use href="/shared/icons.svg#circuit"/></svg>Projects</a></li>
       </ul>
-      <ul class="signin">
-        <li><a href="#">Admin</a></li>
-        <li><a href="#">Sign out</a></li>
+      <ul class="end">
+        <li><a href="#"><svg class="ic c-slate" aria-hidden="true"><use href="/shared/icons.svg#gear"/></svg>Admin</a></li>
+        <li><a href="#"><svg class="ic c-slate" aria-hidden="true"><use href="/shared/icons.svg#logout"/></svg>Sign out</a></li>
       </ul>
     </nav>
   </aside>
 
   <main id="main">
     <div class="content">
+      <!-- PREVIEW ONLY: how pages on the private host will look. Never published on the public site. -->
       <h1>Acoustic calculators</h1>
       <p class="lead">Tools for building acoustics and building services noise.</p>
       <ul class="index">
-        <li><a href="#">Crosstalk D<sub>nT,w</sub> Calculator</a><span>Composite D<sub>nT,w</sub> of a party wall with crosstalk through ventilation paths. <em>live · updated 2026-11-09</em></span></li>
-        <li><a href="#">M&amp;E Noise Calculator</a><span>Duct-borne noise from building services units into rooms. <em>in development · updated 2026-11-09</em></span></li>
+        <li><svg class="ic c-green" aria-hidden="true"><use href="/shared/icons.svg#calc"/></svg><span><a href="#">Crosstalk D<sub>nT,w</sub> Calculator</a><span class="desc">Composite D<sub>nT,w</sub> of a party wall with crosstalk through ventilation paths.</span><span class="meta"><span class="status live">Live</span> · updated 2026-11-09</span></span></li>
+        <li><svg class="ic c-green" aria-hidden="true"><use href="/shared/icons.svg#calc"/></svg><span><a href="#">M&amp;E Noise Calculator</a><span class="desc">Duct-borne noise from building services units into rooms.</span><span class="meta"><span class="status dev">In development</span> · updated 2026-11-09</span></span></li>
       </ul>
-      <p class="muted">Preview of the private sidebar: on the real private host every link works and this page lists the calculators from <code>calculators.json</code>.</p>
+      <p class="muted">Preview of the private sidebar: on the real private host every link works and this list comes from <code>calculators.json</code>.</p>
     </div>
     <footer class="foot">© Rodrigo Francalacci</footer>
   </main>
