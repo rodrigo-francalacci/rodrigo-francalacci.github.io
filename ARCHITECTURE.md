@@ -1,12 +1,12 @@
 # Architecture — rodrigo.francalacci.com
 
-Status: second draft (2026-11-09). Items marked **[DECIDE]** are Rod's open decisions.
+Status: third draft (2026-11-09). Items marked **[DECIDE]** are Rod's open decisions.
 
 ## 1. Public and private (decided 2026-11-09)
 - **Public:** only the home page and, later, the public CV. These stay on **GitHub Pages**.
-- **Login required:** the whole calculators area, meaning the list of calculators and every calculator. These are hosted on **Cloudflare Pages behind Cloudflare Access**, and only Rod's email address is allowed in.
+- **Login required:** the whole calculators area, meaning the list of calculators and every calculator. These are hosted on **Cloudflare Workers behind Cloudflare Access**, and only Rod's email address is allowed in. (Cloudflare has merged Pages into Workers.)
 - **Why:** GitHub Pages has no access control; anything it serves can be downloaded by anyone. Cloudflare Access checks the login at Cloudflare's edge **before any file is sent**, so the calculators' code, methods and manufacturer data are never public.
-- **GitHub Pages stays off for every calculator repository.** The calculator repositories stay **private** on GitHub. Cloudflare Pages can deploy from private repositories.
+- **GitHub Pages stays off for every calculator repository.** The calculator repositories stay **private** on GitHub.
 - **Private documents and saved projects** (later) live in Firebase, behind sign-in and security rules (§4).
 
 ## 2. Addresses
@@ -15,17 +15,18 @@ Status: second draft (2026-11-09). Items marked **[DECIDE]** are Rod's open deci
 |---|---|---|
 | `rodrigo.francalacci.com/` | GitHub Pages, repository `rodrigo-francalacci.github.io` | public |
 | `rodrigo.francalacci.com/cv/` (later) | same | public |
-| `calculators.rodrigo.francalacci.com/` | Cloudflare: the calculators list | Cloudflare Access |
-| `calculators.rodrigo.francalacci.com/crosstalk-calculator/` | Cloudflare Pages project `crosstalk-calculator` | Cloudflare Access |
-| `calculators.rodrigo.francalacci.com/mne-noise-calculator/` | Cloudflare Pages project `mne-noise-calculator` | Cloudflare Access |
+| `calculators.rodrigo.francalacci.com/` | Worker `calculators-hub`: the calculators list | Cloudflare Access |
+| `calculators.rodrigo.francalacci.com/crosstalk-calculator/` | Worker `crosstalk-calculator`, through the hub | Cloudflare Access |
+| `calculators.rodrigo.francalacci.com/mne-noise-calculator/` | Worker `mne-noise-calculator`, through the hub | Cloudflare Access |
 
-How it works:
-- **One Cloudflare Pages project per calculator,** each deployed from its own private GitHub repository on every push to `main`. The project's own address (`<repo>.pages.dev`) is not used publicly and **must also be behind Access** (see the steps).
-- **The calculators host** is a small **Cloudflare Worker** (free plan) on `calculators.rodrigo.francalacci.com`. It serves the calculators list at `/`, and for `/<repository-name>/...` it fetches the file from that calculator's Pages project. This keeps the contract's rule that the repository name is the address.
-- **One Access application** covers the whole hostname `calculators.rodrigo.francalacci.com`, with a policy that allows only Rod's email (login by one-time code sent to that address, or Google). Rod signs in once and every calculator is open.
-- **The website** links to the calculators host from the home page. **[DECIDE]** whether the public home page shows that link at all.
-- **DNS:** the website keeps `rodrigo` → `rodrigo-francalacci.github.io` (CNAME, DNS only). The Worker's custom domain creates the `calculators.rodrigo` record itself.
-- **Certificate check:** `calculators.rodrigo.francalacci.com` is two levels below `francalacci.com`. Cloudflare's free Universal SSL certificate only covers one level (`*.francalacci.com`). Worker custom domains are expected to get their own certificate; **check this on the first deploy**. If they don't, use **`calculators.francalacci.com`** instead (covered for free) rather than paying for Advanced Certificate Manager. **[DECIDE]** hostname.
+How it works (built 2026-11-09):
+- **One Worker per calculator** with **no public address** (`workers_dev = false`, no routes). It serves a staged copy of the calculator's app files and nothing else.
+- **The hub Worker** `calculators-hub` has the custom domain `calculators.rodrigo.francalacci.com`. It serves the list, `calculators.json` and `/shared/`, and passes `/<repository-name>/...` to that calculator's Worker through a **service binding**, the only way to reach it.
+- **One Access application, "Calculators",** covers the whole hostname with the reusable policy **"Rod only"** (Allow, email rodrigo.francalacci@gmail.com; 24-hour session). Rod signs in with a **One-time PIN** emailed to that address. The account's other login method, "Cloudflare", uses whichever Cloudflare account the browser is logged into, so it is refused for anyone else.
+- **No `*.pages.dev`, no `*.workers.dev`, no service tokens.**
+- **The website** links to the calculators host from the home page footer ("Calculators (sign-in)").
+- **DNS:** `rodrigo` → `rodrigo-francalacci.github.io` (CNAME, DNS only). The hub's custom domain manages the `calculators.rodrigo` record.
+- **Certificate:** Cloudflare issued one for `calculators.rodrigo.francalacci.com` automatically (tested 2026-11-09); no paid certificate needed.
 
 ### Alternative: paths on one domain
 `rodrigo.francalacci.com/calculators/...` could be kept by switching the `rodrigo` record to Cloudflare's proxy (orange cloud) and putting a Worker on the path `rodrigo.francalacci.com/calculators/*`. That Worker would send calculator paths to Cloudflare Pages, while everything else passes through to GitHub Pages. Access then protects only that path.
@@ -38,19 +39,19 @@ How it works:
 francalacci-site/               (parent folder, not a repository)
   website/                      → rodrigo-francalacci.github.io  (public, GitHub Pages)
   calculator-template/          → calculator-template            (private, template repository)
-  crosstalk-calculator/         → crosstalk-calculator           (private, Cloudflare Pages)
-  mne-noise-calculator/         → mne-noise-calculator           (private, Cloudflare Pages)
-  calculators-hub/              → calculators-hub (to create)    (private: the Worker and the list page)
+  crosstalk-calculator/         → crosstalk-calculator           (private, Cloudflare Worker)
+  mne-noise-calculator/         → mne-noise-calculator           (private, Cloudflare Worker)
+  calculators-hub/              → calculators-hub                (private: hub Worker, list, calculator deploy configs)
 ```
-- **The calculators list and `calculators.json`** live in `calculators-hub/public/` (moved from `website/` on 2026-11-09), because the list is behind the login too. Each entry gets an `origin` (its `*.pages.dev` address) once its Pages project exists.
-- **The hub reaches each `*.pages.dev`** (itself behind Access) with an Access **service token** stored as Worker secrets.
+- **The calculators list and `calculators.json`** live in `calculators-hub/public/` (moved from `website/` on 2026-11-09), because the list is behind the login too. 
+- **Deploy configs for the calculator Workers** live in `calculators-hub/workers/<id>/`, so the calculator repositories don't change. `node stage.js` copies the app files in; then `wrangler deploy --dry-run` and `wrangler deploy`, **run inside that folder**.
 - **`website/shared/vb6-theme.css`** stays the theme's master copy; calculators keep vendored copies, as now.
 
 To add a calculator:
 1. Click **Use this template** on `calculator-template` (private).
 2. Clone it next to the others and build it in its own Claude Code sessions.
-3. Create a Cloudflare Pages project from the repository, with no build command and output directory `/`.
-4. Add it to `calculators.json` and the Worker's route list in `calculators-hub`.
+3. Add `calculators-hub/workers/<id>/` (copy an existing one) and deploy it; add its service binding to the hub's `wrangler.toml` and its entry to `calculators.json`.
+4. Deploy the hub, then check every address asks for sign-in.
 
 ## 4. Firebase (one project for the calculators) — later phase
 - **Sign-in:** Firebase Auth with Google. Authorised domains: `calculators.rodrigo.francalacci.com` (where the calculators run), `rodrigo.francalacci.com` (if private website pages are added later), and `localhost`.
@@ -64,12 +65,7 @@ To add a calculator:
 
 ## 5. Phases
 1. **Website:** repository, domain (`rodrigo` → GitHub Pages) and HTTPS; a simple public home page. The calculators list is not published here.
-2. **Calculators behind login:**
-   1. Cloudflare Zero Trust (free plan, up to 50 users; Cloudflare may ask for a card even on the free plan, so **ask Rod first**).
-   2. A Cloudflare Pages project for `crosstalk-calculator`, deployed from the private repository.
-   3. The `calculators-hub` Worker with its custom domain and the list page.
-   4. The Access application on the calculators hostname, plus Access on each `<repo>.pages.dev`, so neither can be reached without login.
-   5. Check that every address returns a login screen in a private browser window before anything else is added.
-3. **M&E calculator:** adopt the contract (root `index.html` etc., see its `SITE-CHANGES.md`), then its own Pages project behind the same Access.
+2. **Calculators behind login:** done 2026-11-09 (Zero Trust Free; Access app "Calculators"; hub and two calculator Workers; every address checked).
+3. **M&E calculator:** adopt the contract (root `index.html` etc., see its `SITE-CHANGES.md`), then switch its deploy config to the root `index.html`.
 4. **Firebase:** project, `cloud.js`, security rules; Save/Open in the crosstalk calculator first.
 5. **Public CV** on the website; private documents on Firebase or behind Access.

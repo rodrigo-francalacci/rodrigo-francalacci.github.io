@@ -3,7 +3,7 @@
 Every calculator on rodrigo.francalacci.com follows these rules. Calculators are served at `https://calculators.rodrigo.francalacci.com/<repository-name>/`, behind Cloudflare Access (see `ARCHITECTURE.md`). Their GitHub repositories are private and GitHub Pages stays **off**. A calculator's `CLAUDE.md` says "follow the website's CALCULATOR-CONTRACT.md", and the website's architect checks it.
 
 ## 1. Repository
-- **One repository per calculator** (private). The repository name is its address on the calculators host: `/<repository-name>/`. It is deployed as a Cloudflare Pages project with the same name.
+- **One repository per calculator** (private). The repository name is its address on the calculators host: `/<repository-name>/`. It is deployed as a Cloudflare Worker with the same name and no public address, reached only through the calculators hub.
 - **`index.html` at the root** is the complete app. It opens by **double-clicking** (`file://`) and when served under `/<repository-name>/`, so use **relative** paths for its own files. Use no ES modules (they fail on `file://`); use classic `<script>` tags or one built file.
 - **No frameworks** and no runtime packages. Node is used only for build scripts and tests.
 - **`CLAUDE.md`, `README.md`, `tests/`** (maths tests that exit non-zero on failure), and `.nojekyll`.
@@ -37,5 +37,5 @@ Every calculator on rodrigo.francalacci.com follows these rules. Calculators are
 
 ## 6. Listing
 - **Entry in `calculators-hub/public/calculators.json`** (kept by the architect):
-  - `{ "id": "<repository-name>", "name", "description", "path": "/<repository-name>/", "status": "live" | "in development", "updated": "YYYY-MM-DD", "origin": "https://<project>.pages.dev" }`
-  - `origin` is added once the Cloudflare Pages project exists; without it the calculator is listed but not routed.
+  - `{ "id": "<repository-name>", "name", "description", "path": "/<repository-name>/", "status": "live" | "in development", "updated": "YYYY-MM-DD" }`
+  - Only `"live"` entries are linked from the list.
