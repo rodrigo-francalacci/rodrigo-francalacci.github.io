@@ -24,3 +24,11 @@ Each calculator has its **own repository and its own Claude Code sessions**, whi
 4. **UK English.** Accessible markup: headings in order, alt text, labels, keyboard access.
 5. **Work in small steps.** Commit after each working step, with a clear message, then tell Rod what to check.
 6. **Ask Rod** before anything that changes what is public, costs money, or touches DNS, Cloudflare Access or Firebase settings.
+
+## Cloudflare: a shared account
+The Cloudflare account that holds francalacci.com is shared with a family member. Anything this project didn't create is probably theirs.
+1. **Only change this project's resources:** the `crosstalk-calculator` and `mne-noise-calculator` Workers, the calculators hub Worker, the `Calculators` Access application and its `Rod only` policy, and the `calculators.rodrigo` hostname. Never modify, disable or delete anything else: other Workers, zones, DNS records, Access applications or policies.
+2. **Account-wide settings need Rod's OK first:** the workers.dev subdomain, Zero Trust organisation settings (team name, login methods), billing.
+3. **DNS:** never change a record this project didn't create without Rod's OK. The `rodrigo` record was changed to GitHub Pages with Rod's approval on 2026-11-09.
+4. **Before changing anything, list what's there** and mark what this project created and what was already there.
+5. **wrangler:** run it only inside the folder of the Worker being deployed, never in the parent folder. Recent versions generate a config and deploy whatever folder they detect. Every Worker config sets `workers_dev = false` and `preview_urls = false`.
