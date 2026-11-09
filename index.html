@@ -3,29 +3,49 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rodrigo Francalacci</title>
-<meta name="description" content="Rodrigo Francalacci — acoustic consultant.">
-<style>
-  /* Placeholder home page: the real design is a later step (ask Rod). */
-  :root { --text: #1d1d1d; --muted: #5f5f5f; --accent: #076e6c; --bg: #fafaf8; --line: #e2e2dc; }
-  * { box-sizing: border-box; }
-  body { margin: 0; font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); }
-  main { max-width: 760px; margin: 0 auto; padding: 56px 20px; }
-  h1 { font-size: 2rem; margin: 0 0 4px; }
-  p.lead { color: var(--muted); margin: 0 0 32px; }
-  nav ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
-  nav a { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--text); text-decoration: none; }
-  nav a:hover, nav a:focus-visible { border-color: var(--accent); outline: none; }
-  nav a b { color: var(--accent); }
-  footer { margin-top: 48px; color: var(--muted); font-size: 0.875rem; }
-  footer a { color: var(--muted); }
-</style>
+<title>Rodrigo Francalacci — Acoustic consultant</title>
+<meta name="description" content="Rodrigo Francalacci, acoustic consultant (MIOA).">
+<link rel="stylesheet" href="/shared/site.css">
+<script src="/shared/site.js"></script>
 </head>
 <body>
-<main>
-  <h1>Rodrigo Francalacci</h1>
-  <p class="lead">Acoustic consultant</p>
-  <footer>© Rodrigo Francalacci · <a href="https://calculators.rodrigo.francalacci.com/">Calculators (sign-in)</a></footer>
-</main>
+<a class="skip" href="#main">Skip to content</a>
+<div class="layout">
+  <aside class="side">
+    <div class="side-head">
+      <a class="brand" href="/">Rodrigo Francalacci<small>Acoustic consultant</small></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    </div>
+    <nav id="site-nav" aria-label="Site">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/cv/">CV</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <ul class="signin">
+        <li><a href="https://calculators.rodrigo.francalacci.com/">Sign in</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+      <h1>Rodrigo Francalacci</h1>
+      <p class="lead">Acoustic consultant, MIOA</p>
+
+      <p class="note">Placeholder: the overall information (and a photo) will be written here later.</p>
+
+      <h2>About</h2>
+      <p>A few sentences about the work: building acoustics, sound insulation, building services (M&amp;E) noise, and the calculation tools built along the way.</p>
+
+      <h2>On this site</h2>
+      <ul class="index">
+        <li><a href="/cv/">CV</a><span>Experience, qualifications and memberships.</span></li>
+        <li><a href="/contact/">Contact</a><span>How to get in touch.</span></li>
+      </ul>
+    </div>
+    <footer class="foot">© Rodrigo Francalacci</footer>
+  </main>
+</div>
 </body>
 </html>
