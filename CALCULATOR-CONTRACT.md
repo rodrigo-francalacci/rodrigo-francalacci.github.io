@@ -38,4 +38,4 @@ Every calculator on rodrigo.francalacci.com follows these rules. Calculators are
 ## 6. Listing
 - **Entry in `calculators-hub/public/calculators.json`** (kept by the architect):
   - `{ "id": "<repository-name>", "name", "description", "path": "/<repository-name>/", "status": "live" | "in development", "updated": "YYYY-MM-DD" }`
-  - Only `"live"` entries are linked from the list.
+  - Every entry is linked from the list; `status` is shown as a badge on its card.
