@@ -1,0 +1,144 @@
+/* ==========================================================================
+   site.css: house style for rodrigo.francalacci.com (public pages) and the
+   private host (Acoustics, Electronics, Admin).
+   Plain and light: Arial, black text on white, classic link colours,
+   a left sidebar, small line icons (shared/icons.svg).
+   On narrow screens the sidebar becomes a short menu at the top.
+   Calculators keep their own VB6 theme inside their pages.
+   ========================================================================== */
+
+:root {
+  --ink: #000;                     /* text */
+  --paper: #fff;                   /* background */
+  --red: rgb(220, 20, 60);         /* crimson: current page, highlights, notes */
+  --green: rgb(34, 139, 34);       /* forest green: Acoustics, "live" */
+  --blue: rgb(0, 0, 255);          /* links */
+  --indigo: rgb(75, 0, 130);       /* visited links, Electronics */
+  --slate: rgb(112, 128, 144);     /* secondary text, rules */
+  --rule: rgb(208, 214, 220);      /* light lines */
+  --side-w: 13.5rem;
+  --measure: 46rem;                /* content column, about 80 characters */
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.55 Arial, Helvetica, sans-serif;
+}
+
+/* ---------- skip link (keyboard users) ---------- */
+.skip { position: absolute; left: -999px; top: 0; padding: .4rem .7rem; background: var(--ink); color: var(--paper); z-index: 10; }
+.skip:focus { left: .5rem; top: .5rem; }
+
+/* ---------- icons ---------- */
+.ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
+.c-red { color: var(--red); }
+.c-green { color: var(--green); }
+.c-blue { color: var(--blue); }
+.c-indigo { color: var(--indigo); }
+.c-slate { color: var(--slate); }
+
+/* ---------- layout ---------- */
+.layout { display: grid; grid-template-columns: var(--side-w) minmax(0, 1fr); min-height: 100vh; }
+
+.side {
+  border-right: 1px solid var(--rule);
+  padding: 1.4rem 1rem 1.4rem 1.1rem;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.brand { display: block; color: var(--ink); text-decoration: none; font-weight: bold; font-size: 1.1rem; line-height: 1.25; margin-bottom: 1.4rem; }
+.brand small { display: block; font-weight: normal; font-size: .85rem; color: var(--slate); margin-top: .15rem; }
+.brand:hover { color: var(--red); }
+
+.side nav ul { list-style: none; margin: 0; padding: 0; }
+.side nav a {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .22rem 0 .22rem .55rem; border-left: 3px solid transparent;
+  color: var(--blue); text-decoration: none;
+}
+.side nav a:hover { text-decoration: underline; }
+.side nav a[aria-current="page"] { color: var(--ink); font-weight: bold; border-left-color: var(--red); }
+.side nav a:focus-visible { outline: 1px dotted var(--ink); outline-offset: 1px; }
+.side .group {
+  margin: 1.2rem 0 .3rem .55rem; font-size: .78rem; font-weight: bold;
+  letter-spacing: .05em; text-transform: uppercase;
+}
+.side .group.acoustics { color: var(--green); }
+.side .group.electronics { color: var(--indigo); }
+.side .end { margin-top: 1.2rem; padding-top: .7rem; border-top: 1px solid var(--rule); }
+
+/* the "Menu" toggle only appears on narrow screens, and only with JavaScript */
+.menu-toggle { display: none; }
+
+main { padding: 2.2rem 2.5rem 4rem; }
+.content { max-width: var(--measure); }
+
+footer.foot { max-width: var(--measure); margin-top: 3rem; padding-top: .7rem; border-top: 1px solid var(--rule); color: var(--slate); font-size: .85rem; }
+footer.foot a { color: var(--slate); }
+
+/* ---------- text ---------- */
+h1, h2, h3 { line-height: 1.25; margin: 1.8rem 0 .6rem; }
+h1 { font-size: 1.75rem; margin-top: 0; }
+h2 { font-size: 1.25rem; padding-bottom: .2rem; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.05rem; }
+p, ul, ol, table { margin: 0 0 1rem; }
+a { color: var(--blue); }
+a:visited { color: var(--indigo); }
+a:hover { color: var(--red); }
+.lead { font-size: 1.05rem; color: var(--slate); margin-top: -.3rem; }
+.muted { color: var(--slate); }
+.hl { color: var(--red); font-weight: bold; }          /* highlight a word or phrase */
+code, kbd { font: .9em Consolas, "Courier New", monospace; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+th, td { text-align: left; padding: .35rem .6rem .35rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: bold; border-bottom-color: var(--slate); }
+
+/* a list of links, each with a short description (a section index) */
+.index { list-style: none; padding: 0; }
+.index li { display: flex; gap: .6rem; padding: .55rem 0; border-bottom: 1px dotted var(--rule); }
+.index li .ic { margin-top: .2rem; }
+.index a { font-weight: bold; }
+.index .desc { display: block; color: var(--ink); }
+.index .meta { display: block; color: var(--slate); font-size: .85rem; }
+
+/* small status words, e.g. in the calculators list */
+.status { font-size: .8rem; font-weight: bold; text-transform: uppercase; letter-spacing: .03em; }
+.status.live { color: var(--green); }
+.status.dev { color: var(--red); }
+
+/* a note: thin crimson rule on the left */
+.note { border-left: 3px solid var(--red); padding: .1rem 0 .1rem .8rem; color: var(--ink); }
+.note b:first-child { color: var(--red); }
+
+/* ---------- narrow screens: sidebar becomes a top menu ---------- */
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); padding: .8rem 1rem; }
+  .side-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .brand { margin: 0; }
+  .side nav { margin-top: .7rem; }
+  /* Without JavaScript the menu stays open; with it, a "Menu" button folds it away. */
+  .js .menu-toggle {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font: inherit; font-size: .95rem; padding: .3rem .7rem;
+    border: 1px solid var(--slate); background: var(--paper); color: var(--ink); cursor: pointer;
+  }
+  .js .side nav { display: none; }
+  .js .side.open nav { display: block; }
+  main { padding: 1.4rem 1rem 3rem; }
+}
+
+/* ---------- print (e.g. the CV) ---------- */
+@media print {
+  .side, .skip, footer.foot { display: none !important; }
+  .layout { display: block; }
+  main { padding: 0; }
+  body { font-size: 11pt; }
+  a, a:visited { color: #000; text-decoration: none; }
+}
