@@ -4,7 +4,7 @@
     "name": "Crosstalk DnT,w Calculator",
     "description": "Composite DnT,w of a party wall with crosstalk through ventilation paths: duct system loss, attenuator selection and minimum IL, shared attenuators, schedules, Word / LaTeX / Excel outputs.",
     "path": "/crosstalk-calculator/",
-    "status": "live",
+    "status": "private",
     "updated": "2026-11-09"
   },
   {
