@@ -1,4 +1,6 @@
 # rodrigo.francalacci.com
 
-The website repository (`<github-username>.github.io`) and the architect project for everything on the site.
-See `ARCHITECTURE.md` (the plan), `CALCULATOR-CONTRACT.md` (rules for calculators) and `CLAUDE.md` (Claude Code).
+The public website of Rodrigo Francalacci: plain HTML and CSS served by GitHub Pages.
+
+- `index.html`, `cv/`, `contact/`, `404.html`: the pages.
+- `shared/`: the site stylesheet (`site.css`), script (`site.js`), icons (`icons.svg`) and the VB6 theme used by the calculators.
